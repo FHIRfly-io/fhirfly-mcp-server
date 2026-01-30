@@ -1,6 +1,6 @@
 {
   "name": "@fhirfly-io/mcp-server",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "FHIRfly MCP server for Claude Desktop - Healthcare reference data via Model Context Protocol",
   "author": "FHIRfly.io LLC <admin@fhirfly.io>",
   "license": "MIT",
