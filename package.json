@@ -1,0 +1,79 @@
+{
+  "name": "@fhirfly-io/mcp-server",
+  "version": "0.1.0",
+  "description": "FHIRfly MCP server for Claude Desktop - Healthcare reference data via Model Context Protocol",
+  "author": "FHIRfly.io LLC <admin@fhirfly.io>",
+  "license": "MIT",
+  "type": "module",
+  "homepage": "https://fhirfly.io/docs/mcp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FHIRfly-io/fhirfly-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FHIRfly-io/fhirfly-mcp-server/issues"
+  },
+  "keywords": [
+    "fhirfly",
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "claude-desktop",
+    "healthcare",
+    "api",
+    "ndc",
+    "npi",
+    "rxnorm",
+    "loinc",
+    "icd-10",
+    "fhir",
+    "ai",
+    "llm"
+  ],
+  "bin": {
+    "fhirfly-mcp-server": "./dist/cli.js"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src",
+    "prepublishOnly": "npm run build",
+    "start": "node dist/cli.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.0.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^4.0.0"
+  }
+}
