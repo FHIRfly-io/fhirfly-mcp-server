@@ -24,3 +24,6 @@ coverage/
 # Environment
 .env
 .env.local
+
+# Identity blocklist (contains personal patterns — never commit)
+.identity-blocklist
