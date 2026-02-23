@@ -13,6 +13,9 @@ This package lets Claude Desktop look up real healthcare reference data includin
 - **ICD-10** - Diagnosis and procedure codes (CMS)
 - **CVX/MVX** - Vaccine codes (CDC)
 - **FDA Drug Labels** - Prescribing information
+- **SNOMED CT** - Clinical concepts (IPS free set)
+- **Connectivity** - Provider FHIR endpoints and Direct addresses
+- **Claims Intelligence** - NCCI edits, MUE limits, PFS/RVU data, coverage determinations
 
 When you ask Claude about medications, providers, or clinical codes, it can look up accurate, current information instead of relying on training data.
 
@@ -95,6 +98,14 @@ Claude should use the FHIRfly tools to look up real data.
 | `fda_label_interactions` | Get drug interaction info |
 | `fda_label_dosing` | Get dosing information |
 | `fda_label_sections` | Get specific label sections |
+| `snomed_get` | Look up clinical concept by SNOMED CT ID |
+| `snomed_search` | Search SNOMED CT IPS concepts |
+| `snomed_mappings` | Find cross-terminology mappings for a SNOMED concept |
+| `npi_connectivity` | Look up provider connectivity (FHIR endpoints) |
+| `ncci_validate` | Check if two codes can be billed together (NCCI) |
+| `mue_lookup` | Look up max units of service (MUE limits) |
+| `pfs_lookup` | Look up Medicare fee schedule / RVU data |
+| `coverage_check` | Check LCD/NCD coverage determinations |
 
 ## Configuration Options
 
@@ -172,6 +183,26 @@ Your API key is sent to FHIRfly over HTTPS. No healthcare data is stored locally
 - [MCP Setup Guide](https://fhirfly.io/docs/mcp/claude-desktop)
 - [Get an API Key](https://fhirfly.io)
 - [Report Issues](https://github.com/FHIRfly-io/fhirfly-mcp-server/issues)
+
+## Data Sources & Licensing
+
+| Data Source | Provider | License |
+|-------------|----------|---------|
+| NDC Directory | FDA | Public domain |
+| NPPES (NPI) | CMS | Public domain |
+| RxNorm | NLM (NIH) | UMLS license (free) |
+| LOINC | Regenstrief Institute | Free with attribution |
+| ICD-10-CM/PCS | CMS | Public domain |
+| CVX/MVX | CDC | Public domain |
+| FDA Drug Labels | FDA/openFDA | Public domain |
+| SNOMED CT IPS | SNOMED International | CC BY 4.0 |
+| NCCI/MUE/PFS | CMS | Public domain |
+
+FHIRfly aggregates and indexes these data sources. See [fhirfly.io/docs](https://fhirfly.io/docs) for details.
+
+## Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md) for release history.
 
 ## License
 
