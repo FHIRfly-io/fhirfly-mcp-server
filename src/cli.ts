@@ -6,6 +6,32 @@
  */
 
 import { McpServer } from "./server.js";
+import { VERSION } from "./version.js";
+
+// Handle --version and --help flags (before config validation)
+const args = process.argv.slice(2);
+if (args.includes("--version") || args.includes("-v")) {
+  console.log(VERSION);
+  process.exit(0);
+}
+if (args.includes("--help") || args.includes("-h")) {
+  console.log(`@fhirfly-io/mcp-server v${VERSION}`);
+  console.log("");
+  console.log("MCP server for connecting AI assistants to FHIRfly healthcare data.");
+  console.log("");
+  console.log("Environment variables:");
+  console.log("  FHIRFLY_API_KEY   Your FHIRfly API key (required, starts with ffly_)");
+  console.log("  FHIRFLY_API_URL   API base URL (default: https://api.fhirfly.io)");
+  console.log("  FHIRFLY_DEBUG     Enable debug logging (set to 1 or true)");
+  console.log("");
+  console.log("Usage with Claude Desktop:");
+  console.log('  npx @fhirfly-io/mcp-server');
+  console.log("");
+  console.log("Flags:");
+  console.log("  --version, -v     Show version number");
+  console.log("  --help, -h        Show this help message");
+  process.exit(0);
+}
 
 // Configuration from environment
 const API_KEY = process.env.FHIRFLY_API_KEY;
@@ -42,7 +68,7 @@ if (DEBUG) {
   console.error("FHIRfly MCP Server - Debug Mode");
   console.error("=".repeat(50));
   console.error("API URL:", API_URL);
-  console.error("API Key:", API_KEY.slice(0, 15) + "...");
+  console.error("API Key:", API_KEY.slice(0, 10) + "...");
   console.error("=".repeat(50));
 }
 

@@ -7,25 +7,19 @@
 
 import { StdioTransport } from "./transport.js";
 import { FhirflyClient } from "./client.js";
-import type {
-  JsonRpcRequest,
-  JsonRpcResponse,
-  McpServerConfig,
-  McpToolCallParams,
+import {
+  MCP_ERROR_CODES,
+  type JsonRpcRequest,
+  type JsonRpcResponse,
+  type McpServerConfig,
+  type McpToolCallParams,
 } from "./types.js";
-
-const MCP_ERRORS = {
-  PARSE_ERROR: -32700,
-  INVALID_REQUEST: -32600,
-  METHOD_NOT_FOUND: -32601,
-  INVALID_PARAMS: -32602,
-  INTERNAL_ERROR: -32603,
-} as const;
+import { VERSION } from "./version.js";
 
 // Server capabilities
 const SERVER_INFO = {
   name: "fhirfly-mcp-server",
-  version: "0.1.0",
+  version: VERSION,
 };
 
 const SERVER_CAPABILITIES = {
@@ -69,7 +63,7 @@ export class McpServer {
           jsonrpc: "2.0",
           id: request.id ?? null,
           error: {
-            code: MCP_ERRORS.INVALID_REQUEST,
+            code: MCP_ERROR_CODES.INVALID_REQUEST,
             message: "Invalid JSON-RPC request",
           },
         };
@@ -107,7 +101,7 @@ export class McpServer {
             jsonrpc: "2.0",
             id: request.id,
             error: {
-              code: MCP_ERRORS.METHOD_NOT_FOUND,
+              code: MCP_ERROR_CODES.METHOD_NOT_FOUND,
               message: `Unknown method: ${request.method}`,
             },
           };
@@ -123,7 +117,7 @@ export class McpServer {
         jsonrpc: "2.0",
         id: request.id,
         error: {
-          code: MCP_ERRORS.INTERNAL_ERROR,
+          code: MCP_ERROR_CODES.INTERNAL_ERROR,
           message: `Internal error: ${message}`,
         },
       };
@@ -168,7 +162,7 @@ export class McpServer {
         jsonrpc: "2.0",
         id: request.id,
         error: {
-          code: MCP_ERRORS.INTERNAL_ERROR,
+          code: MCP_ERROR_CODES.INTERNAL_ERROR,
           message: `Failed to list tools: ${message}`,
         },
       };
@@ -186,7 +180,7 @@ export class McpServer {
         jsonrpc: "2.0",
         id: request.id,
         error: {
-          code: MCP_ERRORS.INVALID_PARAMS,
+          code: MCP_ERROR_CODES.INVALID_PARAMS,
           message: "Missing tool name in params",
         },
       };
@@ -207,7 +201,7 @@ export class McpServer {
         jsonrpc: "2.0",
         id: request.id,
         error: {
-          code: MCP_ERRORS.INTERNAL_ERROR,
+          code: MCP_ERROR_CODES.INTERNAL_ERROR,
           message: `Tool call failed: ${message}`,
         },
       };
