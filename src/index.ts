@@ -26,6 +26,7 @@
 export { McpServer } from "./server.js";
 export { FhirflyClient } from "./client.js";
 export { StdioTransport } from "./transport.js";
+export { VERSION } from "./version.js";
 export type {
   JsonRpcRequest,
   JsonRpcResponse,

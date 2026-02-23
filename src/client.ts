@@ -15,6 +15,7 @@ import type {
 
 export class FhirflyClient {
   private config: McpServerConfig;
+  private nextId = 1;
 
   constructor(config: McpServerConfig) {
     this.config = config;
@@ -26,7 +27,7 @@ export class FhirflyClient {
   async request(method: string, params?: Record<string, unknown>): Promise<JsonRpcResponse> {
     const requestBody: JsonRpcRequest = {
       jsonrpc: "2.0",
-      id: Date.now(),
+      id: this.nextId++,
       method,
       params,
     };
@@ -60,14 +61,44 @@ export class FhirflyClient {
         }
 
         if (response.status === 429) {
-          return {
-            jsonrpc: "2.0",
-            id: requestBody.id,
-            error: {
-              code: -32002,
-              message: "Rate limit exceeded. Please slow down requests.",
+          // Retry once after Retry-After delay (cap at 10s)
+          const retryAfter = response.headers.get("Retry-After");
+          const delaySec = Math.min(Number(retryAfter) || 1, 10);
+
+          if (this.config.debug) {
+            console.error(`[MCP DEBUG] Rate limited, retrying after ${delaySec}s`);
+          }
+
+          await new Promise((resolve) => setTimeout(resolve, delaySec * 1000));
+
+          const retryResponse = await fetch(`${this.config.apiUrl}/mcp`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-api-key": this.config.apiKey,
+              "User-Agent": "@fhirfly-io/mcp-server",
             },
-          };
+            body: JSON.stringify(requestBody),
+          });
+
+          if (!retryResponse.ok) {
+            return {
+              jsonrpc: "2.0",
+              id: requestBody.id,
+              error: {
+                code: -32002,
+                message: "Rate limit exceeded. Please slow down requests.",
+              },
+            };
+          }
+
+          const retryResult = (await retryResponse.json()) as JsonRpcResponse;
+
+          if (this.config.debug) {
+            console.error("[MCP DEBUG] Retry response:", JSON.stringify(retryResult, null, 2));
+          }
+
+          return retryResult;
         }
 
         return {
