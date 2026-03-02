@@ -182,7 +182,7 @@ Your API key is sent to FHIRfly over HTTPS. No healthcare data is stored locally
 - [FHIRfly Documentation](https://fhirfly.io/docs)
 - [MCP Setup Guide](https://fhirfly.io/docs/mcp/claude-desktop)
 - [Get an API Key](https://fhirfly.io)
-- [Report Issues](https://github.com/FHIRfly-io/fhirfly-mcp-server/issues)
+- [Report Issues](https://gitlab.com/fhirfly-io/fhirfly-mcp-server/-/issues)
 
 ## Data Sources & Licensing
 

@@ -34,5 +34,5 @@ All notable changes to this project will be documented in this file.
 - Claude Desktop integration via stdio transport
 - Debug mode via `FHIRFLY_DEBUG` environment variable
 
-[0.2.0]: https://github.com/FHIRfly-io/fhirfly-mcp-server/compare/v0.1.7...v0.2.0
-[0.1.7]: https://github.com/FHIRfly-io/fhirfly-mcp-server/releases/tag/v0.1.7
+[0.2.0]: https://gitlab.com/fhirfly-io/fhirfly-mcp-server/-/compare/v0.1.7...v0.2.0
+[0.1.7]: https://gitlab.com/fhirfly-io/fhirfly-mcp-server/-/releases/v0.1.7
