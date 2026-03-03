@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.3] - 2026-03-03
+
+### Added
+- Fetch timeout with `AbortSignal.timeout()` (default 30s, configurable via `McpServerConfig.timeout`)
+- Rate-limit retry tests: successful retry, Retry-After header, max retries, non-retryable errors, timeout abort
+- `release.sh` now auto-syncs `src/version.ts` with `package.json` version
+
+### Fixed
+- `src/version.ts` now matches `package.json` (was stuck at 0.2.0 since v0.2.1)
+
+## [0.2.2] - 2026-02-28
+
+### Fixed
+- Corrected `server.json` schema for MCP registry compliance
+
+### Added
+- MCP registry metadata (`server.json`)
+
+## [0.2.1] - 2026-02-25
+
+### Changed
+- Migrated repository URLs from GitHub to GitLab
+
 ## [0.2.0] - 2026-02-23
 
 ### Added
@@ -34,5 +57,8 @@ All notable changes to this project will be documented in this file.
 - Claude Desktop integration via stdio transport
 - Debug mode via `FHIRFLY_DEBUG` environment variable
 
+[0.2.3]: https://gitlab.com/fhirfly-io/fhirfly-mcp-server/-/compare/v0.2.2...v0.2.3
+[0.2.2]: https://gitlab.com/fhirfly-io/fhirfly-mcp-server/-/compare/v0.2.1...v0.2.2
+[0.2.1]: https://gitlab.com/fhirfly-io/fhirfly-mcp-server/-/compare/v0.2.0...v0.2.1
 [0.2.0]: https://gitlab.com/fhirfly-io/fhirfly-mcp-server/-/compare/v0.1.7...v0.2.0
 [0.1.7]: https://gitlab.com/fhirfly-io/fhirfly-mcp-server/-/releases/v0.1.7

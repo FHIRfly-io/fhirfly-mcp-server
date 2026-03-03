@@ -114,6 +114,7 @@ Claude should use the FHIRfly tools to look up real data.
 | `FHIRFLY_API_KEY` | Your FHIRfly API key (required) | - |
 | `FHIRFLY_API_URL` | API base URL | `https://api.fhirfly.io` |
 | `FHIRFLY_DEBUG` | Enable debug logging (`1` or `true`) | `false` |
+| `FHIRFLY_TIMEOUT` | Fetch timeout in milliseconds | `30000` |
 
 ## Troubleshooting
 

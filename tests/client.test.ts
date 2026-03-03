@@ -136,6 +136,126 @@ describe("FhirflyClient", () => {
     expect(result.content[0].text).toContain("Network error");
   });
 
+  it("should retry on 429 and succeed when retry returns 200", async () => {
+    let callCount = 0;
+
+    globalThis.fetch = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
+      callCount++;
+      const body = JSON.parse(init?.body as string);
+      if (callCount === 1) {
+        return new Response("Rate Limited", {
+          status: 429,
+          headers: { "Retry-After": "0" },
+        });
+      }
+      return new Response(JSON.stringify({
+        jsonrpc: "2.0",
+        id: body.id,
+        result: { tools: [] },
+      }), { status: 200 });
+    });
+
+    const client = new FhirflyClient(TEST_CONFIG);
+    const result = await client.listTools();
+
+    expect(callCount).toBe(2);
+    expect(result.tools).toHaveLength(0);
+  });
+
+  it("should respect Retry-After header value", async () => {
+    let retryAfterValue: string | null = null;
+
+    globalThis.fetch = vi.fn(async () => {
+      if (!retryAfterValue) {
+        retryAfterValue = "3";
+        return new Response("Rate Limited", {
+          status: 429,
+          headers: { "Retry-After": retryAfterValue },
+        });
+      }
+      return new Response("Rate Limited", { status: 429 });
+    });
+
+    const start = Date.now();
+    const client = new FhirflyClient(TEST_CONFIG);
+    await client.callTool("ndc_get", { code: "test" });
+    const elapsed = Date.now() - start;
+
+    // Should have waited at least ~3 seconds (allow some slack for test timing)
+    expect(elapsed).toBeGreaterThanOrEqual(2500);
+  });
+
+  it("should cap Retry-After at 10 seconds", { timeout: 15000 }, async () => {
+    globalThis.fetch = vi.fn(async () => {
+      return new Response("Rate Limited", {
+        status: 429,
+        headers: { "Retry-After": "999" },
+      });
+    });
+
+    const start = Date.now();
+    const client = new FhirflyClient(TEST_CONFIG);
+    await client.callTool("ndc_get", { code: "test" });
+    const elapsed = Date.now() - start;
+
+    // Should have waited no more than ~10 seconds (cap)
+    expect(elapsed).toBeLessThan(11000);
+    // Should have waited at least ~10 seconds (not less)
+    expect(elapsed).toBeGreaterThanOrEqual(9500);
+  });
+
+  it("should not retry non-retryable errors (500)", async () => {
+    let callCount = 0;
+
+    globalThis.fetch = vi.fn(async () => {
+      callCount++;
+      return new Response("Internal Server Error", { status: 500, statusText: "Internal Server Error" });
+    });
+
+    const client = new FhirflyClient(TEST_CONFIG);
+    const result = await client.callTool("ndc_get", { code: "test" });
+
+    expect(callCount).toBe(1);
+    expect(result.isError).toBe(true);
+    expect(result.content[0].text).toContain("500");
+  });
+
+  it("should return network error when timeout triggers abort", async () => {
+    globalThis.fetch = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
+      // Simulate AbortSignal.timeout by checking for the signal and aborting
+      const signal = init?.signal;
+      if (signal) {
+        throw new DOMException("The operation was aborted due to timeout", "TimeoutError");
+      }
+      return new Response("ok", { status: 200 });
+    });
+
+    const client = new FhirflyClient({ ...TEST_CONFIG, timeout: 100 });
+    const result = await client.callTool("ndc_get", { code: "test" });
+
+    expect(result.isError).toBe(true);
+    expect(result.content[0].text).toContain("Network error");
+  });
+
+  it("should pass AbortSignal.timeout to fetch", async () => {
+    let capturedSignal: AbortSignal | undefined;
+
+    globalThis.fetch = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
+      capturedSignal = init?.signal ?? undefined;
+      const body = JSON.parse(init?.body as string);
+      return new Response(JSON.stringify({
+        jsonrpc: "2.0",
+        id: body.id,
+        result: { tools: [] },
+      }), { status: 200 });
+    });
+
+    const client = new FhirflyClient({ ...TEST_CONFIG, timeout: 5000 });
+    await client.listTools();
+
+    expect(capturedSignal).toBeDefined();
+  });
+
   it("should increment request IDs", async () => {
     const ids: number[] = [];
 

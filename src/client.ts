@@ -36,6 +36,8 @@ export class FhirflyClient {
       console.error(`[MCP DEBUG] API Request: ${method}`, params);
     }
 
+    const timeoutMs = this.config.timeout ?? 30_000;
+
     try {
       const response = await fetch(`${this.config.apiUrl}/mcp`, {
         method: "POST",
@@ -45,6 +47,7 @@ export class FhirflyClient {
           "User-Agent": "@fhirfly-io/mcp-server",
         },
         body: JSON.stringify(requestBody),
+        signal: AbortSignal.timeout(timeoutMs),
       });
 
       if (!response.ok) {
@@ -79,6 +82,7 @@ export class FhirflyClient {
               "User-Agent": "@fhirfly-io/mcp-server",
             },
             body: JSON.stringify(requestBody),
+            signal: AbortSignal.timeout(timeoutMs),
           });
 
           if (!retryResponse.ok) {

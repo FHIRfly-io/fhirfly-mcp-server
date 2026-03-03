@@ -61,6 +61,8 @@ export interface McpServerConfig {
   apiKey: string;
   apiUrl: string;
   debug: boolean;
+  /** Fetch timeout in milliseconds. Default: 30000 (30 seconds). */
+  timeout?: number;
 }
 
 // Standard MCP Error Codes

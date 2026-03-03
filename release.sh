@@ -134,6 +134,13 @@ main() {
   new_pkg="$(pkg_version)"
   [[ "$new_pkg" == "$version" ]] || die "package.json version is '$new_pkg' after bump, expected '$version'."
 
+  # Sync version.ts with the new version
+  if [[ -f src/version.ts ]]; then
+    echo "==> Syncing src/version.ts to $version..."
+    sed -i '' "s/export const VERSION = \".*\"/export const VERSION = \"$version\"/" src/version.ts
+    git add src/version.ts
+  fi
+
   echo "==> Committing version bump..."
   git add package.json
   [[ -f package-lock.json ]] && git add package-lock.json

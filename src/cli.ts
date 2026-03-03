@@ -23,6 +23,7 @@ if (args.includes("--help") || args.includes("-h")) {
   console.log("  FHIRFLY_API_KEY   Your FHIRfly API key (required, starts with ffly_)");
   console.log("  FHIRFLY_API_URL   API base URL (default: https://api.fhirfly.io)");
   console.log("  FHIRFLY_DEBUG     Enable debug logging (set to 1 or true)");
+  console.log("  FHIRFLY_TIMEOUT   Fetch timeout in milliseconds (default: 30000)");
   console.log("");
   console.log("Usage with Claude Desktop:");
   console.log('  npx @fhirfly-io/mcp-server');
@@ -37,6 +38,7 @@ if (args.includes("--help") || args.includes("-h")) {
 const API_KEY = process.env.FHIRFLY_API_KEY;
 const API_URL = process.env.FHIRFLY_API_URL || "https://api.fhirfly.io";
 const DEBUG = process.env.FHIRFLY_DEBUG === "1" || process.env.FHIRFLY_DEBUG === "true";
+const TIMEOUT = process.env.FHIRFLY_TIMEOUT ? parseInt(process.env.FHIRFLY_TIMEOUT, 10) : undefined;
 
 // Validate required configuration
 if (!API_KEY) {
@@ -77,6 +79,7 @@ const server = new McpServer({
   apiKey: API_KEY,
   apiUrl: API_URL,
   debug: DEBUG,
+  timeout: TIMEOUT,
 });
 
 server.start();
