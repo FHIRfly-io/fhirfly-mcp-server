@@ -1,0 +1,15 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - fhirflyApiKey
+    properties:
+      fhirflyApiKey:
+        type: string
+        description: FHIRfly API key (get one at https://fhirfly.io)
+  commandFunction:
+    |-
+    config => ({ command: 'npx', args: ['-y', '@fhirfly-io/mcp-server'], env: { FHIRFLY_API_KEY: config.fhirflyApiKey } })
