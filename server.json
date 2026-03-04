@@ -6,12 +6,12 @@
     "url": "https://github.com/FHIRfly-io/fhirfly-mcp-server",
     "source": "github"
   },
-  "version": "0.2.3",
+  "version": "0.3.0",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@fhirfly-io/mcp-server",
-      "version": "0.2.3",
+      "version": "0.3.0",
       "transport": {
         "type": "stdio"
       },
