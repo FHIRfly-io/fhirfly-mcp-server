@@ -8,10 +8,10 @@
   "homepage": "https://fhirfly.io/docs/mcp",
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/fhirfly-io/fhirfly-mcp-server.git"
+    "url": "git+https://github.com/FHIRfly-io/fhirfly-mcp-server.git"
   },
   "bugs": {
-    "url": "https://gitlab.com/fhirfly-io/fhirfly-mcp-server/-/issues"
+    "url": "https://github.com/FHIRfly-io/fhirfly-mcp-server/issues"
   },
   "mcpName": "io.fhirfly/mcp-server",
   "keywords": [

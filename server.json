@@ -3,8 +3,8 @@
   "name": "io.fhirfly/mcp-server",
   "description": "Healthcare reference data: drugs, providers, diagnoses, labs, vaccines, and claims via 28 tools.",
   "repository": {
-    "url": "https://gitlab.com/fhirfly-io/fhirfly-mcp-server",
-    "source": "gitlab"
+    "url": "https://github.com/FHIRfly-io/fhirfly-mcp-server",
+    "source": "github"
   },
   "version": "0.2.3",
   "packages": [
