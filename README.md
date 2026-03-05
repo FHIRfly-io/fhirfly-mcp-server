@@ -15,6 +15,7 @@ This package lets Claude Desktop look up real healthcare reference data includin
 - **FDA Drug Labels** - Prescribing information
 - **SNOMED CT** - Clinical concepts (IPS free set)
 - **Connectivity** - Provider FHIR endpoints and Direct addresses
+- **SMA** - State Medicaid Agency FHIR endpoint directory (CMS)
 - **Claims Intelligence** - NCCI edits, MUE limits, PFS/RVU data, coverage determinations
 
 When you ask Claude about medications, providers, or clinical codes, it can look up accurate, current information instead of relying on training data.
@@ -102,6 +103,9 @@ Claude should use the FHIRfly tools to look up real data.
 | `snomed_search` | Search SNOMED CT IPS concepts |
 | `snomed_mappings` | Find cross-terminology mappings for a SNOMED concept |
 | `npi_connectivity` | Look up provider connectivity (FHIR endpoints) |
+| `sma_list_states` | List states with Medicaid FHIR endpoint status |
+| `sma_get_state` | Get SMA FHIR endpoint details for a state |
+| `sma_stats` | Get aggregate SMA implementation statistics |
 | `ncci_validate` | Check if two codes can be billed together (NCCI) |
 | `mue_lookup` | Look up max units of service (MUE limits) |
 | `pfs_lookup` | Look up Medicare fee schedule / RVU data |
@@ -197,6 +201,7 @@ Your API key is sent to FHIRfly over HTTPS. No healthcare data is stored locally
 | CVX/MVX | CDC | Public domain |
 | FDA Drug Labels | FDA/openFDA | Public domain |
 | SNOMED CT IPS | SNOMED International | CC BY 4.0 |
+| SMA Endpoint Directory | CMS | Public domain |
 | NCCI/MUE/PFS | CMS | Public domain |
 
 FHIRfly aggregates and indexes these data sources. See [fhirfly.io/docs](https://fhirfly.io/docs) for details.

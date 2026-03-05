@@ -4,9 +4,9 @@
 
 ## Description
 
-FHIRfly connects AI assistants to real-time healthcare reference data via 28 MCP tools. Instead of relying on training data that may be outdated or hallucinated, your AI can look up accurate information from authoritative government and standards bodies — FDA, CMS, NLM, CDC, and SNOMED International.
+FHIRfly connects AI assistants to real-time healthcare reference data via 31 MCP tools. Instead of relying on training data that may be outdated or hallucinated, your AI can look up accurate information from authoritative government and standards bodies — FDA, CMS, NLM, CDC, and SNOMED International.
 
-Covers drug data (NDC, RxNorm, FDA Labels), provider data (NPI), clinical codes (ICD-10, LOINC, SNOMED CT, CVX/MVX), and claims intelligence (NCCI edits, MUE limits, Medicare fee schedules, coverage determinations).
+Covers drug data (NDC, RxNorm, FDA Labels), provider data (NPI), clinical codes (ICD-10, LOINC, SNOMED CT, CVX/MVX), connectivity data (FHIR endpoints, SMA Endpoint Directory), and claims intelligence (NCCI edits, MUE limits, Medicare fee schedules, coverage determinations).
 
 Zero runtime dependencies. Runs locally as a stdio bridge. Your API key never leaves your machine except over HTTPS to FHIRfly's API.
 
@@ -27,6 +27,7 @@ Healthcare
 - FDA Drug Labels — full prescribing info, safety warnings, interactions, dosing
 - NPI provider lookup and search (CMS NPPES registry)
 - Provider FHIR endpoint connectivity data
+- State Medicaid Agency (SMA) FHIR endpoint directory (CMS)
 - ICD-10-CM/PCS diagnosis and procedure code lookup and search
 - LOINC lab test code lookup and search (Regenstrief Institute)
 - SNOMED CT clinical concept lookup and search (IPS free set)
@@ -92,6 +93,9 @@ npx @fhirfly-io/mcp-server
 | `snomed_search` | Search SNOMED CT clinical terms |
 | `snomed_mappings` | Get cross-terminology mappings for a SNOMED concept |
 | `npi_connectivity` | Check a provider's FHIR endpoint connectivity |
+| `sma_list_states` | List states with Medicaid FHIR endpoint implementation status |
+| `sma_get_state` | Get full SMA FHIR endpoint details for a specific state |
+| `sma_stats` | Get aggregate SMA implementation statistics |
 | `ncci_validate` | Validate CPT code pair for NCCI billing edits |
 | `mue_lookup` | Look up Medically Unlikely Edit limits for a CPT code |
 | `pfs_lookup` | Look up Medicare Physician Fee Schedule / RVU data |
@@ -99,7 +103,7 @@ npx @fhirfly-io/mcp-server
 
 ## Tags
 
-healthcare, medical, fhir, drugs, ndc, npi, rxnorm, loinc, icd-10, snomed, fda, claims, terminology, clinical, medicare, vaccines, cvx, billing, interoperability, reference-data
+healthcare, medical, fhir, drugs, ndc, npi, rxnorm, loinc, icd-10, snomed, fda, claims, terminology, clinical, medicare, vaccines, cvx, billing, interoperability, reference-data, medicaid, sma
 
 ## Documentation URL
 
