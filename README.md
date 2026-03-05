@@ -72,6 +72,8 @@ Try asking Claude:
 - "Look up NPI 1234567893"
 - "Search for COVID vaccines in the CVX database"
 - "What are the drug interactions for Lipitor?"
+- "Which states have implemented Medicaid FHIR endpoints?"
+- "Show me the FHIR endpoint details for California's Medicaid program"
 
 Claude should use the FHIRfly tools to look up real data.
 

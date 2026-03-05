@@ -64,6 +64,7 @@ npx @fhirfly-io/mcp-server
 - "What does ICD-10 code J06.9 mean?"
 - "Show me the FDA label safety warnings for metformin"
 - "Check if there's a national coverage determination for CGM devices"
+- "Which states have implemented Medicaid FHIR endpoints?"
 
 ### Tools
 
