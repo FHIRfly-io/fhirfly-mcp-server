@@ -1,17 +1,17 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.fhirfly/mcp-server",
-  "description": "Healthcare reference data: drugs, providers, diagnoses, labs, vaccines, and claims via 28 tools.",
+  "description": "Healthcare reference data: drugs, providers, diagnoses, labs, vaccines, claims, and state Medicaid FHIR endpoints via 31 tools.",
   "repository": {
     "url": "https://github.com/FHIRfly-io/fhirfly-mcp-server",
     "source": "github"
   },
-  "version": "0.3.0",
+  "version": "0.4.0",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@fhirfly-io/mcp-server",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "transport": {
         "type": "stdio"
       },
