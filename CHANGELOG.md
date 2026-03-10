@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2026-03-10
+
+### Added
+- 8 batch lookup tools: `ndc_batch`, `npi_batch`, `icd10_batch`, `rxnorm_batch`, `loinc_batch`, `cvx_batch`, `mvx_batch`, `fda_label_batch`
+- Total tools increased from 31 to 39
+
 ## [0.2.3] - 2026-03-03
 
 ### Added
