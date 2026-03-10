@@ -112,6 +112,15 @@ Claude should use the FHIRfly tools to look up real data.
 | `mue_lookup` | Look up max units of service (MUE limits) |
 | `pfs_lookup` | Look up Medicare fee schedule / RVU data |
 | `coverage_check` | Check LCD/NCD coverage determinations |
+| **Batch Tools** | |
+| `ndc_batch` | Look up multiple NDC codes (max 500) |
+| `npi_batch` | Look up multiple NPI numbers (max 100) |
+| `icd10_batch` | Look up multiple ICD-10 codes (max 100) |
+| `rxnorm_batch` | Look up multiple RxCUIs (max 100) |
+| `loinc_batch` | Look up multiple LOINC codes (max 100) |
+| `cvx_batch` | Look up multiple CVX codes (max 100) |
+| `mvx_batch` | Look up multiple MVX codes (max 100) |
+| `fda_label_batch` | Look up multiple FDA labels (max 50) |
 
 ## Configuration Options
 
