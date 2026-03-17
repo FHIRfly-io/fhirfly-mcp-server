@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.0] - 2026-03-17
+
+### Added
+- HCC risk adjustment tools: `hcc_get`, `hcc_reverse`, `hcc_search` (CMS ICD-10 to HCC crosswalk, models V21/V22/V24/V28)
+- OPCS-4 procedure tools: `opcs4_get`, `opcs4_search` (UK NHS procedure classification, OGL v3.0)
+- Total tools increased from 39 to 44
+
 ## [0.5.0] - 2026-03-10
 
 ### Added
@@ -63,6 +70,8 @@ All notable changes to this project will be documented in this file.
 - Claude Desktop integration via stdio transport
 - Debug mode via `FHIRFLY_DEBUG` environment variable
 
+[0.6.0]: https://github.com/FHIRfly-io/fhirfly-mcp-server/compare/v0.5.0...v0.6.0
+[0.5.0]: https://github.com/FHIRfly-io/fhirfly-mcp-server/compare/v0.2.3...v0.5.0
 [0.2.3]: https://gitlab.com/fhirfly-io/fhirfly-mcp-server/-/compare/v0.2.2...v0.2.3
 [0.2.2]: https://gitlab.com/fhirfly-io/fhirfly-mcp-server/-/compare/v0.2.1...v0.2.2
 [0.2.1]: https://gitlab.com/fhirfly-io/fhirfly-mcp-server/-/compare/v0.2.0...v0.2.1

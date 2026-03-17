@@ -14,6 +14,8 @@ This package lets Claude Desktop look up real healthcare reference data includin
 - **CVX/MVX** - Vaccine codes (CDC)
 - **FDA Drug Labels** - Prescribing information
 - **SNOMED CT** - Clinical concepts (IPS free set)
+- **HCC** - CMS Hierarchical Condition Category risk adjustment mappings
+- **OPCS-4** - UK NHS procedure classification codes
 - **Connectivity** - Provider FHIR endpoints and Direct addresses
 - **SMA** - State Medicaid Agency FHIR endpoint directory (CMS)
 - **Claims Intelligence** - NCCI edits, MUE limits, PFS/RVU data, coverage determinations
@@ -112,6 +114,12 @@ Claude should use the FHIRfly tools to look up real data.
 | `mue_lookup` | Look up max units of service (MUE limits) |
 | `pfs_lookup` | Look up Medicare fee schedule / RVU data |
 | `coverage_check` | Check LCD/NCD coverage determinations |
+| **HCC / OPCS-4 Tools** | |
+| `hcc_get` | Look up HCC risk adjustment mappings for an ICD-10 code |
+| `hcc_reverse` | Find all ICD-10 codes mapping to a given HCC category |
+| `hcc_search` | Search the HCC crosswalk by code, model, or category |
+| `opcs4_get` | Look up an OPCS-4 UK NHS procedure code |
+| `opcs4_search` | Search OPCS-4 procedure codes |
 | **Batch Tools** | |
 | `ndc_batch` | Look up multiple NDC codes (max 500) |
 | `npi_batch` | Look up multiple NPI numbers (max 100) |
@@ -212,6 +220,8 @@ Your API key is sent to FHIRfly over HTTPS. No healthcare data is stored locally
 | CVX/MVX | CDC | Public domain |
 | FDA Drug Labels | FDA/openFDA | Public domain |
 | SNOMED CT IPS | SNOMED International | CC BY 4.0 |
+| HCC Crosswalk | CMS | Public domain |
+| OPCS-4 | NHS England | OGL v3.0 (Crown copyright) |
 | SMA Endpoint Directory | CMS | Public domain |
 | NCCI/MUE/PFS | CMS | Public domain |
 

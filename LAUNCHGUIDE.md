@@ -4,9 +4,9 @@
 
 ## Description
 
-FHIRfly connects AI assistants to real-time healthcare reference data via 31 MCP tools. Instead of relying on training data that may be outdated or hallucinated, your AI can look up accurate information from authoritative government and standards bodies — FDA, CMS, NLM, CDC, and SNOMED International.
+FHIRfly connects AI assistants to real-time healthcare reference data via 44 MCP tools. Instead of relying on training data that may be outdated or hallucinated, your AI can look up accurate information from authoritative government and standards bodies — FDA, CMS, NLM, CDC, SNOMED International, and NHS England.
 
-Covers drug data (NDC, RxNorm, FDA Labels), provider data (NPI), clinical codes (ICD-10, LOINC, SNOMED CT, CVX/MVX), connectivity data (FHIR endpoints, SMA Endpoint Directory), and claims intelligence (NCCI edits, MUE limits, Medicare fee schedules, coverage determinations).
+Covers drug data (NDC, RxNorm, FDA Labels), provider data (NPI), clinical codes (ICD-10, LOINC, SNOMED CT, CVX/MVX), HCC risk adjustment mappings, UK NHS procedure codes (OPCS-4), connectivity data (FHIR endpoints, SMA Endpoint Directory), and claims intelligence (NCCI edits, MUE limits, Medicare fee schedules, coverage determinations).
 
 Zero runtime dependencies. Runs locally as a stdio bridge. Your API key never leaves your machine except over HTTPS to FHIRfly's API.
 
@@ -34,6 +34,8 @@ Healthcare
 - SNOMED CT cross-terminology mappings (ICD-10, LOINC)
 - CVX vaccine code lookup and search (CDC)
 - MVX vaccine manufacturer lookup and search (CDC)
+- HCC risk adjustment crosswalk — ICD-10 to HCC mappings (CMS, models V21/V22/V24/V28)
+- OPCS-4 UK NHS procedure classification lookup and search (NHS England, OGL v3.0)
 - NCCI Procedure-to-Procedure edit validation (billing compliance)
 - Medically Unlikely Edits (MUE) service limit lookup
 - Medicare Physician Fee Schedule / RVU data lookup
@@ -101,10 +103,15 @@ npx @fhirfly-io/mcp-server
 | `mue_lookup` | Look up Medically Unlikely Edit limits for a CPT code |
 | `pfs_lookup` | Look up Medicare Physician Fee Schedule / RVU data |
 | `coverage_check` | Check LCD/NCD coverage determinations |
+| `hcc_get` | Look up HCC risk adjustment mappings for an ICD-10 code |
+| `hcc_reverse` | Find all ICD-10 codes mapping to a given HCC category |
+| `hcc_search` | Search the HCC crosswalk by code, model, or category |
+| `opcs4_get` | Look up an OPCS-4 UK NHS procedure code |
+| `opcs4_search` | Search OPCS-4 procedure codes |
 
 ## Tags
 
-healthcare, medical, fhir, drugs, ndc, npi, rxnorm, loinc, icd-10, snomed, fda, claims, terminology, clinical, medicare, vaccines, cvx, billing, interoperability, reference-data, medicaid, sma
+healthcare, medical, fhir, drugs, ndc, npi, rxnorm, loinc, icd-10, snomed, fda, claims, terminology, clinical, medicare, vaccines, cvx, billing, interoperability, reference-data, medicaid, sma, hcc, risk-adjustment, opcs-4, nhs
 
 ## Documentation URL
 
