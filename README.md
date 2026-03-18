@@ -16,6 +16,7 @@ This package lets Claude Desktop look up real healthcare reference data includin
 - **SNOMED CT** - Clinical concepts (IPS free set)
 - **HCC** - CMS Hierarchical Condition Category risk adjustment mappings
 - **OPCS-4** - UK NHS procedure classification codes
+- **dm+d** - UK Dictionary of Medicines and Devices (NHS)
 - **Connectivity** - Provider FHIR endpoints and Direct addresses
 - **SMA** - State Medicaid Agency FHIR endpoint directory (CMS)
 - **Claims Intelligence** - NCCI edits, MUE limits, PFS/RVU data, coverage determinations
@@ -120,6 +121,9 @@ Claude should use the FHIRfly tools to look up real data.
 | `hcc_search` | Search the HCC crosswalk by code, model, or category |
 | `opcs4_get` | Look up an OPCS-4 UK NHS procedure code |
 | `opcs4_search` | Search OPCS-4 procedure codes |
+| **dm+d Tools** | |
+| `dmd_get` | Look up a UK dm+d medicine/device by SNOMED code |
+| `dmd_search` | Search UK dm+d medicines and devices |
 | **Batch Tools** | |
 | `ndc_batch` | Look up multiple NDC codes (max 500) |
 | `npi_batch` | Look up multiple NPI numbers (max 100) |
@@ -222,6 +226,7 @@ Your API key is sent to FHIRfly over HTTPS. No healthcare data is stored locally
 | SNOMED CT IPS | SNOMED International | CC BY 4.0 |
 | HCC Crosswalk | CMS | Public domain |
 | OPCS-4 | NHS England | OGL v3.0 (Crown copyright) |
+| dm+d | NHS England / NHSBSA | OGL v3.0 (Crown copyright) |
 | SMA Endpoint Directory | CMS | Public domain |
 | NCCI/MUE/PFS | CMS | Public domain |
 

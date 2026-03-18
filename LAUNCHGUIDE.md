@@ -4,9 +4,9 @@
 
 ## Description
 
-FHIRfly connects AI assistants to real-time healthcare reference data via 44 MCP tools. Instead of relying on training data that may be outdated or hallucinated, your AI can look up accurate information from authoritative government and standards bodies — FDA, CMS, NLM, CDC, SNOMED International, and NHS England.
+FHIRfly connects AI assistants to real-time healthcare reference data via 46 MCP tools. Instead of relying on training data that may be outdated or hallucinated, your AI can look up accurate information from authoritative government and standards bodies — FDA, CMS, NLM, CDC, SNOMED International, and NHS England.
 
-Covers drug data (NDC, RxNorm, FDA Labels), provider data (NPI), clinical codes (ICD-10, LOINC, SNOMED CT, CVX/MVX), HCC risk adjustment mappings, UK NHS procedure codes (OPCS-4), connectivity data (FHIR endpoints, SMA Endpoint Directory), and claims intelligence (NCCI edits, MUE limits, Medicare fee schedules, coverage determinations).
+Covers drug data (NDC, RxNorm, FDA Labels), provider data (NPI), clinical codes (ICD-10, LOINC, SNOMED CT, CVX/MVX), HCC risk adjustment mappings, UK NHS procedure codes (OPCS-4), UK dm+d medicines and devices (NHS), connectivity data (FHIR endpoints, SMA Endpoint Directory), and claims intelligence (NCCI edits, MUE limits, Medicare fee schedules, coverage determinations).
 
 Zero runtime dependencies. Runs locally as a stdio bridge. Your API key never leaves your machine except over HTTPS to FHIRfly's API.
 
@@ -36,6 +36,7 @@ Healthcare
 - MVX vaccine manufacturer lookup and search (CDC)
 - HCC risk adjustment crosswalk — ICD-10 to HCC mappings (CMS, models V21/V22/V24/V28)
 - OPCS-4 UK NHS procedure classification lookup and search (NHS England, OGL v3.0)
+- dm+d UK Dictionary of Medicines and Devices lookup and search (NHS England / NHSBSA, OGL v3.0)
 - NCCI Procedure-to-Procedure edit validation (billing compliance)
 - Medically Unlikely Edits (MUE) service limit lookup
 - Medicare Physician Fee Schedule / RVU data lookup
@@ -108,10 +109,12 @@ npx @fhirfly-io/mcp-server
 | `hcc_search` | Search the HCC crosswalk by code, model, or category |
 | `opcs4_get` | Look up an OPCS-4 UK NHS procedure code |
 | `opcs4_search` | Search OPCS-4 procedure codes |
+| `dmd_get` | Look up a UK dm+d medicine/device by SNOMED code |
+| `dmd_search` | Search UK dm+d medicines and devices |
 
 ## Tags
 
-healthcare, medical, fhir, drugs, ndc, npi, rxnorm, loinc, icd-10, snomed, fda, claims, terminology, clinical, medicare, vaccines, cvx, billing, interoperability, reference-data, medicaid, sma, hcc, risk-adjustment, opcs-4, nhs
+healthcare, medical, fhir, drugs, ndc, npi, rxnorm, loinc, icd-10, snomed, fda, claims, terminology, clinical, medicare, vaccines, cvx, billing, interoperability, reference-data, medicaid, sma, hcc, risk-adjustment, opcs-4, nhs, dmd
 
 ## Documentation URL
 
