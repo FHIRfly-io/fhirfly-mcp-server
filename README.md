@@ -19,6 +19,10 @@ This package lets Claude Desktop look up real healthcare reference data includin
 - **dm+d** - UK Dictionary of Medicines and Devices (NHS)
 - **UCUM** - Unified Code for Units of Measure (NLM)
 - **RxClass** - Drug classification hierarchy (NLM)
+- **HCPCS** - Level II procedure and supply codes (CMS)
+- **MS-DRG** - Diagnosis Related Groups for inpatient payment (CMS)
+- **POS** - Place of Service codes for claims submission (CMS)
+- **J-Code/NDC Crosswalk** - Bidirectional HCPCS J-code to NDC mapping (CMS)
 - **Connectivity** - Provider FHIR endpoints and Direct addresses
 - **SMA** - State Medicaid Agency FHIR endpoint directory (CMS)
 - **Claims Intelligence** - NCCI edits, MUE limits, PFS/RVU data, coverage determinations
@@ -120,6 +124,15 @@ Claude should use the FHIRfly tools to look up real data.
 | `mue_lookup` | Look up max units of service (MUE limits) |
 | `pfs_lookup` | Look up Medicare fee schedule / RVU data |
 | `coverage_check` | Check LCD/NCD coverage determinations |
+| **HCPCS / MS-DRG / POS / J-Code Tools** | |
+| `hcpcs_get` | Look up an HCPCS Level II procedure/supply code |
+| `hcpcs_modifier_get` | Look up an HCPCS modifier code |
+| `hcpcs_search` | Search HCPCS Level II codes |
+| `msdrg_get` | Look up an MS-DRG code |
+| `msdrg_search` | Search MS-DRG codes |
+| `pos_get` | Look up a Place of Service code |
+| `jcode_by_hcpcs` | Find NDCs mapped to a J-code/HCPCS code |
+| `jcode_by_ndc` | Find HCPCS codes mapped to an NDC |
 | **HCC / OPCS-4 Tools** | |
 | `hcc_get` | Look up HCC risk adjustment mappings for an ICD-10 code |
 | `hcc_reverse` | Find all ICD-10 codes mapping to a given HCC category |
@@ -244,6 +257,10 @@ Your API key is sent to FHIRfly over HTTPS. No healthcare data is stored locally
 | UCUM | NLM (NIH) / Regenstrief Institute | Free with attribution |
 | RxClass | NLM (NIH) | UMLS license (free) |
 | SMA Endpoint Directory | CMS | Public domain |
+| HCPCS Level II | CMS | Public domain |
+| MS-DRG | CMS | Public domain |
+| Place of Service | CMS | Public domain |
+| J-Code/NDC Crosswalk | CMS | Public domain |
 | NCCI/MUE/PFS | CMS | Public domain |
 
 FHIRfly aggregates and indexes these data sources. See [fhirfly.io/docs](https://fhirfly.io/docs) for details.
