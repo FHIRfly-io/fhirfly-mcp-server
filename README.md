@@ -17,6 +17,8 @@ This package lets Claude Desktop look up real healthcare reference data includin
 - **HCC** - CMS Hierarchical Condition Category risk adjustment mappings
 - **OPCS-4** - UK NHS procedure classification codes
 - **dm+d** - UK Dictionary of Medicines and Devices (NHS)
+- **UCUM** - Unified Code for Units of Measure (NLM)
+- **RxClass** - Drug classification hierarchy (NLM)
 - **Connectivity** - Provider FHIR endpoints and Direct addresses
 - **SMA** - State Medicaid Agency FHIR endpoint directory (CMS)
 - **Claims Intelligence** - NCCI edits, MUE limits, PFS/RVU data, coverage determinations
@@ -77,6 +79,9 @@ Try asking Claude:
 - "What are the drug interactions for Lipitor?"
 - "Which states have implemented Medicaid FHIR endpoints?"
 - "Show me the FHIR endpoint details for California's Medicaid program"
+- "What is the UCUM code for milligrams per deciliter?"
+- "Convert 100 mg to grams"
+- "What drugs are in the HMG-CoA Reductase Inhibitors class?"
 
 Claude should use the FHIRfly tools to look up real data.
 
@@ -124,6 +129,15 @@ Claude should use the FHIRfly tools to look up real data.
 | **dm+d Tools** | |
 | `dmd_get` | Look up a UK dm+d medicine/device by SNOMED code |
 | `dmd_search` | Search UK dm+d medicines and devices |
+| **UCUM Tools** | |
+| `ucum_get` | Look up a UCUM unit code (e.g., mg, mL, kg/m2) |
+| `ucum_search` | Search units of measure by name or description |
+| `ucum_validate` | Validate a UCUM expression for correctness |
+| `ucum_convert` | Convert a value between compatible UCUM units |
+| **RxClass Tools** | |
+| `rxclass_get` | Look up a drug class by class ID |
+| `rxclass_search` | Search drug classifications by name or type |
+| `rxclass_members` | List drugs belonging to a drug class |
 | **Batch Tools** | |
 | `ndc_batch` | Look up multiple NDC codes (max 500) |
 | `npi_batch` | Look up multiple NPI numbers (max 100) |
@@ -227,6 +241,8 @@ Your API key is sent to FHIRfly over HTTPS. No healthcare data is stored locally
 | HCC Crosswalk | CMS | Public domain |
 | OPCS-4 | NHS England | OGL v3.0 (Crown copyright) |
 | dm+d | NHS England / NHSBSA | OGL v3.0 (Crown copyright) |
+| UCUM | NLM (NIH) / Regenstrief Institute | Free with attribution |
+| RxClass | NLM (NIH) | UMLS license (free) |
 | SMA Endpoint Directory | CMS | Public domain |
 | NCCI/MUE/PFS | CMS | Public domain |
 
