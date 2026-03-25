@@ -1,17 +1,17 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.fhirfly/mcp-server",
-  "description": "Healthcare data: drugs, providers, diagnoses, labs, vaccines, claims, Medicaid endpoints, HCC risk adjustment, UK NHS procedure codes, and UK dm+d medicines.",
+  "description": "Healthcare data: drugs, providers, diagnoses, labs, vaccines, claims, Medicaid endpoints, HCC risk adjustment, UK NHS procedure codes, and UK dm+d medicines, DDI reference.",
   "repository": {
     "url": "https://github.com/FHIRfly-io/fhirfly-mcp-server",
     "source": "github"
   },
-  "version": "0.7.0",
+  "version": "0.9.0",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@fhirfly-io/mcp-server",
-      "version": "0.7.0",
+      "version": "0.9.0",
       "transport": {
         "type": "stdio"
       },

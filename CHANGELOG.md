@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.9.0] - 2026-03-25
+
+### Added
+- DDI Reference tool: `check_drug_interactions` — multi-drug interaction check using FDA label text + RxNorm enrichment
+- Total tools increased from 55 to 56
+
+## [0.8.0] - 2026-03-24
+
+### Added
+- UCUM tools: `ucum_get`, `ucum_search`, `ucum_validate`, `ucum_convert` (NLM/Regenstrief)
+- RxClass tools: `rxclass_get`, `rxclass_search`, `rxclass_members` (NLM MED-RT)
+- HCPCS tools: `hcpcs_get`, `hcpcs_modifier_get`, `hcpcs_search` (CMS)
+- MS-DRG tools: `msdrg_get`, `msdrg_search` (CMS)
+- POS tool: `pos_get` (CMS)
+- J-Code tools: `jcode_by_hcpcs`, `jcode_by_ndc` (CMS)
+- Total tools increased from 46 to 55
+
 ## [0.7.0] - 2026-03-18
 
 ### Added
@@ -76,6 +93,8 @@ All notable changes to this project will be documented in this file.
 - Claude Desktop integration via stdio transport
 - Debug mode via `FHIRFLY_DEBUG` environment variable
 
+[0.9.0]: https://github.com/FHIRfly-io/fhirfly-mcp-server/compare/v0.8.0...v0.9.0
+[0.8.0]: https://github.com/FHIRfly-io/fhirfly-mcp-server/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/FHIRfly-io/fhirfly-mcp-server/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/FHIRfly-io/fhirfly-mcp-server/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/FHIRfly-io/fhirfly-mcp-server/compare/v0.2.3...v0.5.0

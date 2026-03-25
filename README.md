@@ -23,6 +23,7 @@ This package lets Claude Desktop look up real healthcare reference data includin
 - **MS-DRG** - Diagnosis Related Groups for inpatient payment (CMS)
 - **POS** - Place of Service codes for claims submission (CMS)
 - **J-Code/NDC Crosswalk** - Bidirectional HCPCS J-code to NDC mapping (CMS)
+- **DDI Reference** — Drug-drug interaction text from FDA labels + RxNorm enrichment
 - **Connectivity** - Provider FHIR endpoints and Direct addresses
 - **SMA** - State Medicaid Agency FHIR endpoint directory (CMS)
 - **Claims Intelligence** - NCCI edits, MUE limits, PFS/RVU data, coverage determinations
@@ -86,6 +87,7 @@ Try asking Claude:
 - "What is the UCUM code for milligrams per deciliter?"
 - "Convert 100 mg to grams"
 - "What drugs are in the HMG-CoA Reductase Inhibitors class?"
+- "Check interactions between aspirin and warfarin"
 
 Claude should use the FHIRfly tools to look up real data.
 
@@ -151,6 +153,8 @@ Claude should use the FHIRfly tools to look up real data.
 | `rxclass_get` | Look up a drug class by class ID |
 | `rxclass_search` | Search drug classifications by name or type |
 | `rxclass_members` | List drugs belonging to a drug class |
+| **DDI Tools** | |
+| `check_drug_interactions` | Check drug-drug interactions for multiple drugs (FDA label text + RxNorm) |
 | **Batch Tools** | |
 | `ndc_batch` | Look up multiple NDC codes (max 500) |
 | `npi_batch` | Look up multiple NPI numbers (max 100) |
@@ -262,6 +266,7 @@ Your API key is sent to FHIRfly over HTTPS. No healthcare data is stored locally
 | Place of Service | CMS | Public domain |
 | J-Code/NDC Crosswalk | CMS | Public domain |
 | NCCI/MUE/PFS | CMS | Public domain |
+| DDI Reference | FDA + NLM | Public domain |
 
 FHIRfly aggregates and indexes these data sources. See [fhirfly.io/docs](https://fhirfly.io/docs) for details.
 

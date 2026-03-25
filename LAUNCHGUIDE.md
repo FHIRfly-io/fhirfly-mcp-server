@@ -4,7 +4,7 @@
 
 ## Description
 
-FHIRfly connects AI assistants to real-time healthcare reference data via 46 MCP tools. Instead of relying on training data that may be outdated or hallucinated, your AI can look up accurate information from authoritative government and standards bodies — FDA, CMS, NLM, CDC, SNOMED International, and NHS England.
+FHIRfly connects AI assistants to real-time healthcare reference data via 56 MCP tools. Instead of relying on training data that may be outdated or hallucinated, your AI can look up accurate information from authoritative government and standards bodies — FDA, CMS, NLM, CDC, SNOMED International, and NHS England.
 
 Covers drug data (NDC, RxNorm, FDA Labels), provider data (NPI), clinical codes (ICD-10, LOINC, SNOMED CT, CVX/MVX), HCC risk adjustment mappings, UK NHS procedure codes (OPCS-4), UK dm+d medicines and devices (NHS), connectivity data (FHIR endpoints, SMA Endpoint Directory), and claims intelligence (NCCI edits, MUE limits, Medicare fee schedules, coverage determinations).
 
@@ -37,6 +37,13 @@ Healthcare
 - HCC risk adjustment crosswalk — ICD-10 to HCC mappings (CMS, models V21/V22/V24/V28)
 - OPCS-4 UK NHS procedure classification lookup and search (NHS England, OGL v3.0)
 - dm+d UK Dictionary of Medicines and Devices lookup and search (NHS England / NHSBSA, OGL v3.0)
+- UCUM unit code lookup, search, validation, and conversion (NLM/Regenstrief)
+- RxClass drug classification lookup, search, and member listing (NLM MED-RT)
+- HCPCS Level II procedure/supply code lookup and search (CMS)
+- MS-DRG Diagnosis Related Group lookup and search (CMS)
+- POS Place of Service code lookup (CMS)
+- J-Code/NDC Crosswalk bidirectional HCPCS-to-NDC mapping (CMS)
+- DDI Reference — multi-drug interaction check using FDA label text + RxNorm enrichment
 - NCCI Procedure-to-Procedure edit validation (billing compliance)
 - Medically Unlikely Edits (MUE) service limit lookup
 - Medicare Physician Fee Schedule / RVU data lookup
@@ -111,10 +118,26 @@ npx @fhirfly-io/mcp-server
 | `opcs4_search` | Search OPCS-4 procedure codes |
 | `dmd_get` | Look up a UK dm+d medicine/device by SNOMED code |
 | `dmd_search` | Search UK dm+d medicines and devices |
+| `ucum_get` | Look up a UCUM unit code |
+| `ucum_search` | Search units of measure |
+| `ucum_validate` | Validate a UCUM expression |
+| `ucum_convert` | Convert between UCUM units |
+| `rxclass_get` | Look up a drug class by ID |
+| `rxclass_search` | Search drug classifications |
+| `rxclass_members` | List drugs in a class |
+| `hcpcs_get` | Look up an HCPCS Level II code |
+| `hcpcs_modifier_get` | Look up an HCPCS modifier |
+| `hcpcs_search` | Search HCPCS codes |
+| `msdrg_get` | Look up an MS-DRG code |
+| `msdrg_search` | Search MS-DRG codes |
+| `pos_get` | Look up a Place of Service code |
+| `jcode_by_hcpcs` | Find NDCs for a J-code |
+| `jcode_by_ndc` | Find HCPCS codes for an NDC |
+| `check_drug_interactions` | Check drug-drug interactions for multiple drugs |
 
 ## Tags
 
-healthcare, medical, fhir, drugs, ndc, npi, rxnorm, loinc, icd-10, snomed, fda, claims, terminology, clinical, medicare, vaccines, cvx, billing, interoperability, reference-data, medicaid, sma, hcc, risk-adjustment, opcs-4, nhs, dmd
+healthcare, medical, fhir, drugs, ndc, npi, rxnorm, loinc, icd-10, snomed, fda, claims, terminology, clinical, medicare, vaccines, cvx, billing, interoperability, reference-data, medicaid, sma, hcc, risk-adjustment, opcs-4, nhs, dmd, ddi, drug-interactions, ucum, rxclass, hcpcs, msdrg, pos, jcode
 
 ## Documentation URL
 
