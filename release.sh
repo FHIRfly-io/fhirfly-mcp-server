@@ -4,6 +4,17 @@ set -euo pipefail
 DEFAULT_BRANCH="${DEFAULT_BRANCH:-main}"
 REMOTE="${REMOTE:-origin}"
 
+# --- MCP registry publishing config (used by: ./release.sh registry) ---
+# The io.fhirfly namespace is DNS-verified; publishing signs with an ed25519
+# key stored (as a PEM) in AWS Secrets Manager. Kept local (not in CI) so the
+# signing key never has to live as a GitHub secret.
+REGISTRY_SECRET_ID="${MCP_REGISTRY_SECRET_ID:-mcp-registry/fhirfly-io-key}"
+AWS_REGION="${AWS_REGION:-us-east-1}"
+AWS_PROFILE="${AWS_PROFILE:-bluraven_sls}"; export AWS_PROFILE
+MCP_DOMAIN="${MCP_DOMAIN:-fhirfly.io}"
+MCP_PUBLISHER_VERSION="${MCP_PUBLISHER_VERSION:-v1.7.9}"
+MCP_PUBLISHER_BIN=""
+
 die() { echo "Error: $*" >&2; exit 1; }
 
 require_cmd() {
@@ -50,6 +61,92 @@ highest_semver_tag() {
 
 pkg_version() {
   node -p "require('./package.json').version"
+}
+
+# Download mcp-publisher (prebuilt release binary) into a per-version temp cache
+# and set MCP_PUBLISHER_BIN. Uses an existing on-PATH binary if present.
+ensure_mcp_publisher() {
+  if command -v mcp-publisher >/dev/null 2>&1; then
+    MCP_PUBLISHER_BIN="$(command -v mcp-publisher)"
+    return
+  fi
+  local os arch cache url
+  os="$(uname -s | tr '[:upper:]' '[:lower:]')"
+  case "$(uname -m)" in
+    arm64|aarch64) arch="arm64" ;;
+    x86_64|amd64)  arch="amd64" ;;
+    *) die "Unsupported architecture for mcp-publisher: $(uname -m)" ;;
+  esac
+  cache="${TMPDIR:-/tmp}/mcp-publisher-${MCP_PUBLISHER_VERSION}"
+  MCP_PUBLISHER_BIN="$cache/mcp-publisher"
+  [[ -x "$MCP_PUBLISHER_BIN" ]] && return
+  mkdir -p "$cache"
+  url="https://github.com/modelcontextprotocol/registry/releases/download/${MCP_PUBLISHER_VERSION}/mcp-publisher_${os}_${arch}.tar.gz"
+  echo "==> Downloading mcp-publisher ${MCP_PUBLISHER_VERSION} ($os/$arch)..."
+  curl -sSL "$url" -o "$cache/mcp-publisher.tar.gz" || die "Failed to download mcp-publisher"
+  tar xzf "$cache/mcp-publisher.tar.gz" -C "$cache" || die "Failed to extract mcp-publisher"
+  [[ -x "$MCP_PUBLISHER_BIN" ]] || die "mcp-publisher binary missing after extract"
+}
+
+# Publish the current server.json to the official MCP registry. Run AFTER the
+# GitHub release has published the matching npm version (the registry validates
+# that npm identifier@version exists).
+publish_registry() {
+  require_cmd git; require_cmd node; require_cmd npm
+  require_cmd aws;  require_cmd python3; require_cmd curl; require_cmd tar
+  [[ -f server.json ]] || die "server.json not found (run from the mcp-server repo root)."
+
+  local version identifier
+  version="$(node -p "require('./server.json').version")"
+  identifier="$(node -p "require('./server.json').packages[0].identifier")"
+  echo "==> Registry publish for ${identifier}@${version}"
+
+  # The registry rejects a publish whose npm version isn't live yet, so wait.
+  echo "==> Waiting for npm to show ${identifier}@${version} (draft the GitHub release if you haven't)..."
+  local waited=0
+  until npm view "${identifier}@${version}" version >/dev/null 2>&1; do
+    (( waited >= 300 )) && die "npm has no ${identifier}@${version} after 5 min. Publish the GitHub release, then re-run: ./release.sh registry"
+    sleep 15; waited=$((waited + 15)); echo "   ...still waiting (${waited}s)"
+  done
+  echo "==> npm has ${identifier}@${version} ✓"
+
+  ensure_mcp_publisher
+
+  # Fetch the ed25519 DNS key (PEM) and reduce it to the 32-byte hex seed that
+  # mcp-publisher expects. Written to a 600-perm temp file, removed on return.
+  local seedfile
+  seedfile="$(mktemp)"; chmod 600 "$seedfile"
+  trap 'rm -f "$seedfile"' RETURN
+  aws secretsmanager get-secret-value --secret-id "$REGISTRY_SECRET_ID" \
+      --region "$AWS_REGION" --query 'SecretString' --output text 2>/dev/null \
+    | python3 -c "
+import sys, re, base64, binascii
+raw = sys.stdin.read()
+body = ''.join(re.sub(r'-----[A-Z ]+-----', '', raw).split())  # strip PEM armor lines
+der = base64.b64decode(body)          # ed25519 PKCS8 = 16-byte prefix + 32-byte seed
+open('$seedfile','w').write(binascii.hexlify(der[-32:]).decode())
+" || die "Failed to load/convert the registry key from '$REGISTRY_SECRET_ID'"
+  [[ -s "$seedfile" ]] || die "Empty seed after key conversion."
+
+  echo "==> Logging in to the MCP registry (dns: $MCP_DOMAIN)..."
+  "$MCP_PUBLISHER_BIN" login dns --domain "$MCP_DOMAIN" --private-key "$(cat "$seedfile")" \
+    || die "mcp-publisher login failed"
+
+  echo "==> Publishing ${identifier}@${version}..."
+  "$MCP_PUBLISHER_BIN" publish || die "mcp-publisher publish failed"
+
+  echo "==> Verifying registry latest version..."
+  curl -s "https://registry.modelcontextprotocol.io/v0/servers?search=${identifier}" \
+    | python3 -c "
+import sys, json
+d = json.load(sys.stdin)
+for s in d.get('servers', []):
+    srv = s.get('server', s)
+    meta = (s.get('_meta') or {}).get('io.modelcontextprotocol.registry/official', {})
+    if srv.get('name') == '${identifier}' and meta.get('isLatest'):
+        print('   registry latest =', srv.get('version'))
+" || true
+  echo "✅ Registry publish complete for ${identifier}@${version}"
 }
 
 main() {
@@ -141,6 +238,21 @@ main() {
     git add src/version.ts
   fi
 
+  # Sync server.json (MCP registry manifest) — both the top-level version and
+  # each package version — so ./release.sh registry publishes the right release.
+  if [[ -f server.json ]]; then
+    echo "==> Syncing server.json to $version..."
+    node -e '
+      const fs = require("fs");
+      const v = process.argv[1];
+      const s = JSON.parse(fs.readFileSync("server.json", "utf8"));
+      s.version = v;
+      if (Array.isArray(s.packages)) for (const p of s.packages) if ("version" in p) p.version = v;
+      fs.writeFileSync("server.json", JSON.stringify(s, null, 2) + "\n");
+    ' "$version"
+    git add server.json
+  fi
+
   echo "==> Committing version bump..."
   git add package.json
   [[ -f package-lock.json ]] && git add package-lock.json
@@ -167,9 +279,15 @@ main() {
   echo "  - Target: $DEFAULT_BRANCH"
   echo "  - Publish the release (this should trigger npm publish via OIDC)"
   echo
+  echo "Then update the MCP registry (once npm shows $version live):"
+  echo "  ./release.sh registry"
+  echo
   echo "Sanity check (tagged package.json):"
   echo "  git show $tag:package.json | head -n 20"
 }
 
-main "$@"
+case "${1:-}" in
+  registry) publish_registry ;;
+  *)        main "$@" ;;
+esac
 
