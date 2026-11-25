@@ -78,7 +78,7 @@ Completely quit Claude Desktop and reopen it. The FHIRfly tools should now be av
 
 Try asking Claude:
 
-- "What is NDC 0069-0151-01?"
+- "What is NDC 58151-155-77?"
 - "Look up NPI 1234567893"
 - "Search for COVID vaccines in the CVX database"
 - "What are the drug interactions for Lipitor?"
